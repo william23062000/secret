@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 80px;
+      background: url('https://i.pinimg.com/originals/f4/4c/9d/f44c9d408504d60e16a1dc2377ad1781.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 50px;
+      color: #6a1b9a;
+      text-shadow: 1px 1px 2px white;
+    }
+
+    button {
+      padding: 25px 60px;
+      font-size: 1.8em;
+      margin: 30px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      z-index: 1;
+      position: relative;
+    }
+
+    #message {
+      margin-top: 60px;
+      font-size: 2em;
+      color: #d63384;
+      display: none;
+      z-index: 1;
+      position: relative;
+    }
+
+    #noMessages {
+      margin-top: 30px;
+      color: #c9184a;
+      font-size: 1.5em;
+      min-height: 60px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .heart {
+      position: absolute;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background-color: inherit;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia?</h1>
+  <div>
+    <button id="yesBtn">Sí</button>
+    <button id="noBtn">No</button>
+  </div>
+  <div id="noMessages"></div>
+  <div id="message">Me alegra saber que esa sea tu respuesta. Te amo mucho. 💖</div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const message = document.getElementById('message');
+    const noMessages = document.getElementById('noMessages');
+
+    const mensajesNo = [
+      "¿Estás segura de eso? 🥺",
+      "Piénsalo otra vez, por favor 😢",
+      "No me rompas el corazón 💔",
+      "Vamos, sabes que quieres decir que sí ❤️",
+      "¿Por qué no? 😭",
+      "Seguro fue un error de dedo, ¿cierto? 😅",
+      "Duele más de lo que imaginé 💘",
+      "¿Y si lo intentamos juntos? 💞",
+      "No te rindas en el amor 💌",
+      "Esa no puede ser tu respuesta final... 😔"
+    ];
+
+    let noClicks = 0;
+    const colores = ['#f8bbd0', '#f48fb1', '#e1bee7', '#ce93d8', '#f28b82'];
+
+    function crearCorazonFlotante(x, y) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+
+      const size = Math.random() * 30 + 10;
+      heart.style.width = size + "px";
+      heart.style.height = size + "px";
+
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      heart.style.backgroundColor = color;
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      heart.style.animationDuration = (Math.random() * 2 + 4) + "s";
+      heart.style.opacity = Math.random() * 0.5 + 0.3;
+
+      heart.style.setProperty('--size', size + "px");
+      heart.style.setProperty('--radius', size / 2 + 'px');
+
+      heart.innerHTML = `
+        <style>
+          .heart::before {
+            width: ${size}px;
+            height: ${size}px;
+            top: -${size / 2}px;
+            left: 0;
+          }
+          .heart::after {
+            width: ${size}px;
+            height: ${size}px;
+            top: 0;
+            left: -${size / 2}px;
+          }
+        </style>
+      `;
+
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    function lanzarCorazones() {
+      for (let i = 0; i < 40; i++) {
+        const x = Math.random() * window.innerWidth;
+        const y = window.innerHeight;
+        crearCorazonFlotante(x, y);
+      }
+    }
+
+    yesBtn.addEventListener('click', () => {
+      message.style.display = 'block';
+      lanzarCorazones();
+    });
+
+    noBtn.addEventListener('click', () => {
+      noClicks++;
+      noBtn.style.fontSize = Math.max(0.5, 1.8 - noClicks * 0.2) + 'em';
+      yesBtn.style.fontSize = (1.8 + noClicks * 0.3) + 'em';
+
+      const mensaje = mensajesNo[Math.floor(Math.random() * mensajesNo.length)];
+      const nuevoMensaje = document.createElement("div");
+      nuevoMensaje.textContent = mensaje;
+      noMessages.appendChild(nuevoMensaje);
+    });
+
+    <iframe width="300" height="170"
+  src="https://www.youtube.com/embed/8N-DvRAspzo?rel=0&modestbranding=1&autoplay=0"
+  title="YouTube video player" frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
+
+    // Corazones constantes de fondo
+    setInterval(() => {
+      const x = Math.random() * window.innerWidth;
+      const y = window.innerHeight;
+      crearCorazonFlotante(x, y);
+    }, 400);
+  </script>
+</body>
+</html>
